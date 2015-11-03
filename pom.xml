@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.theoryinpractise</groupId>
+    <artifactId>halbuilder-styleguide-tile</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+    <packaging>tile</packaging>
+
+    <name>halbuilder-styleguide-tile</name>
+    <description>HalBuilder Style Guide Enforcement Tile</description>
+    <url>http://www.gotohal.net</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.repaint.maven</groupId>
+                <artifactId>tiles-maven-plugin</artifactId>
+                <version>2.4-SNAPSHOT</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <tiles>
+                        <tile>com.theoryinpractise:halbuilder-release-tile:[1.0.0,2.0.0)</tile>
+                    </tiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
