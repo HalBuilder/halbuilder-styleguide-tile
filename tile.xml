@@ -219,11 +219,19 @@
                 <configuration>
                     <includeTests>true</includeTests>
                     <failOnError>false</failOnError>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <!-- <failOnError>true</failOnError> -->
                     <plugins>
                         <plugin>
                             <groupId>com.mebigfatguy.fb-contrib</groupId>
                             <artifactId>fb-contrib</artifactId>
                             <version>6.2.3</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.h3xstream.findsecbugs</groupId>
+                            <artifactId>findsecbugs-plugin</artifactId>
+                            <version>1.4.3</version>
                         </plugin>
                     </plugins>
                 </configuration>
