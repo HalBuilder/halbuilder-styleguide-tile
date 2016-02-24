@@ -10,6 +10,10 @@
         <asciidoclet.version>1.5.4</asciidoclet.version>
     </properties>
 
+    <prerequisites>
+      <maven>3.3.9</maven>
+    </prerequisites>
+    
     <profiles>
         <profile>
             <id>security</id>

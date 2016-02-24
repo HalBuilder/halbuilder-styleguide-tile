@@ -6,6 +6,10 @@
     <version>1.0.4-SNAPSHOT</version>
     <packaging>tile</packaging>
 
+    <prerequisites>
+      <maven>3.3.9</maven>
+    </prerequisites>
+
     <name>halbuilder-styleguide-tile</name>
     <description>HalBuilder Style Guide Enforcement Tile</description>
     <url>http://www.gotohal.net</url>
