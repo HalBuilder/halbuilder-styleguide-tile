@@ -4,7 +4,7 @@
 
     <groupId>com.theoryinpractise</groupId>
     <artifactId>halbuilder-styleguide-tile</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7-SNAPSHOT</version>
     <packaging>tile</packaging>
 
     <name>halbuilder-styleguide-tile</name>
