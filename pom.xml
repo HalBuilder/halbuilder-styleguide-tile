@@ -8,7 +8,7 @@
   </parent>
   <groupId>com.theoryinpractise</groupId>
   <artifactId>halbuilder-styleguide-tile</artifactId>
-  <version>1.0.11</version>
+  <version>1.0.12-SNAPSHOT</version>
   <packaging>tile</packaging>
   <name>halbuilder-styleguide-tile</name>
   <description>HalBuilder Style Guide Enforcement Tile</description>
@@ -26,8 +26,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <scm>
-    <tag>halbuilder-styleguide-tile-1.0.11</tag>
-  </scm>
 </project>
