@@ -57,6 +57,7 @@
                 <compilerArgs>
                     <!-- <arg>-Xmaxerrs=1000000</arg> -->
                     <arg>-Xlint</arg>
+                    <arg>-Xdiags:verbose</arg>
                     <arg>-Xep:OptionalEquality:WARN</arg>
                     <arg>-Xep:SelfComparison:ERROR</arg>
                     <arg>-Xep:SelfEquals:ERROR</arg>
@@ -72,6 +73,7 @@
                     <arg>-Xep:LiteralClassName:ERROR</arg>
                     <arg>-Xep:SimpleDateFormatConstant:ERROR</arg>
                     <arg>-Xep:StaticQualifiedUsingExpression:ERROR</arg>
+                    <arg>-Xep:RedundantThrows:ERROR</arg>
                 </compilerArgs>
                 </configuration>
                 <dependencies>
