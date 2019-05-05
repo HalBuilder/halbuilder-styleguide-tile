@@ -66,6 +66,8 @@
                     <!-- <arg>-Xmaxerrs=1000000</arg> -->
                     <arg>-Xlint</arg>
                     <arg>-Xdiags:verbose</arg>
+                    <arg>-XepExcludedPaths:.*/target/generated-.*sources/.*</arg>
+                    <arg>-XepOpt:NullAway:AnnotatedPackages=com.theoryinpractise.halbuilder</arg>
                     <arg>-Xep:NullAway:ERROR</arg>
                     <arg>-Xep:OptionalEquality:WARN</arg>
                     <arg>-Xep:SelfComparison:ERROR</arg>
