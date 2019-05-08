@@ -1,483 +1,481 @@
-<project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <properties>
-        <dependency.check.fastfail>true</dependency.check.fastfail>
-        <jacoco.check.skip>false</jacoco.check.skip>
-        <jacoco.check.ratio>0.50</jacoco.check.ratio>
-        <jacoco.check.missed>0</jacoco.check.missed>
-        <asciidoclet.version>1.5.4</asciidoclet.version>
-    </properties>
-    <prerequisites>
-        <maven>3.3.9</maven>
-    </prerequisites>
-    <profiles>
-        <profile>
-            <id>security</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.owasp</groupId>
-                        <artifactId>dependency-check-maven</artifactId>
-                        <version>4.0.2</version>
-                        <configuration>
-                            <format>ALL</format>
-                            <failBuildOnCVSS>${failBuildOnCVSS}</failBuildOnCVSS>
-                            <suppressionFile>${suppressionFile}</suppressionFile>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>owasp-depdendency-check</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-    <build>
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <properties>
+    <dependency.check.fastfail>true</dependency.check.fastfail>
+    <jacoco.check.skip>false</jacoco.check.skip>
+    <jacoco.check.ratio>0.50</jacoco.check.ratio>
+    <jacoco.check.missed>0</jacoco.check.missed>
+    <asciidoclet.version>1.5.4</asciidoclet.version>
+  </properties>
+  <prerequisites>
+    <maven>3.3.9</maven>
+  </prerequisites>
+  <profiles>
+    <profile>
+      <id>security</id>
+      <build>
         <plugins>
-		    <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-	            <artifactId>build-helper-maven-plugin</artifactId>
-	            <version>3.0.0</version>
-	            <executions>
-	                <execution>
-	                    <id>remove-project-artifact-default</id>
-	                    <goals>
-	                        <goal>remove-project-artifact</goal>
-	                     </goals>
-                         <configuration>
-                             <removeAll>true</removeAll>
-                         </configuration>
-                    </execution>
-                    <execution>
-                        <id>remove-project-artifact-clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>remove-project-artifact</goal>
-                         </goals>
-                         <configuration>
-                             <removeAll>true</removeAll>
-                         </configuration>
-                     </execution>
-		        </executions>
-		    </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <!-- use error prone: http://errorprone.info/docs/installation -->
-                <configuration>
-                <compilerId>javac-with-errorprone</compilerId>
-                <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                <compilerVersion>1.8</compilerVersion>
-                <source>1.8</source>
-                <target>1.8</target>
-                <useIncrementalCompilation>false</useIncrementalCompilation>
-                <showWarnings>${showWarnings}</showWarnings>
-                <annotationProcessorPaths>
-                    <path>
-                    <groupId>com.uber.nullaway</groupId>
-                    <artifactId>nullaway</artifactId>
-                    <version>0.7.2</version>
-                    </path>
-                </annotationProcessorPaths>
-
-                <compilerArgs>
-                    <!-- <arg>-Xmaxerrs=1000000</arg> -->
-                    <arg>-Xlint</arg>
-                    <arg>-Xdiags:verbose</arg>
-                    <arg>-Xep:NullAway:ERROR</arg>
-                    <arg>-Xep:OptionalEquality:WARN</arg>
-                    <arg>-Xep:SelfComparison:ERROR</arg>
-                    <arg>-Xep:SelfEquals:ERROR</arg>
-                    <arg>-Xep:StringEquality:ERROR</arg>
-                    <arg>-Xep:EqualsHashCode:ERROR</arg>
-                    <arg>-Xep:EqualsIncompatibleType:ERROR</arg>
-                    <arg>-Xep:NonOverridingEquals:ERROR</arg>
-                    <arg>-Xep:NullableVoid:ERROR</arg>
-                    <arg>-Xep:NullablePrimitive:ERROR</arg>
-                    <arg>-Xep:NonOverridingEquals:ERROR</arg>
-                    <arg>-Xep:NullableConstructor:ERROR</arg>
-                    <arg>-Xep:MissingOverride:ERROR</arg>
-                    <arg>-Xep:StaticQualifiedUsingExpression:ERROR</arg>
-                    <arg>-Xep:RedundantThrows:ERROR</arg>
-                </compilerArgs>
-                </configuration>
-                <dependencies>
-                <dependency>
-                <groupId>org.codehaus.plexus</groupId>
-                <artifactId>plexus-compiler-javac-errorprone</artifactId>
-                <version>2.8.5</version>
-                </dependency>
-                <!-- override plexus-compiler-javac-errorprone's dependency on
-                    Error Prone with the latest version -->
-                <dependency>
-                <groupId>com.google.errorprone</groupId>
-                <artifactId>error_prone_core</artifactId>
-                <version>2.3.3</version>
-                </dependency>
-            </dependencies>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <configuration>
-                <trimStackTrace>false</trimStackTrace>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <configuration>
-                <trimStackTrace>false</trimStackTrace>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.7</version>
-                <executions>
-                    <execution>
-                        <id>version-checks</id>
-                        <goals>
-                            <goal>display-plugin-updates</goal>
-                            <goal>display-dependency-updates</goal>
-                        </goals>
-                        <phase>validate</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jdeps-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jdkinternals</goal>
-                            <!-- verify main classes -->
-                            <goal>test-jdkinternals</goal>
-                            <!-- verify test classes -->
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>1.16</version>
-                <executions>
-                    <execution>
-                        <id>licences</id>
-                        <goals>
-                            <goal>add-third-party</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.theoryinpractise</groupId>
-                <artifactId>googleformatter-maven-plugin</artifactId>
-                <version>1.7.2</version>
-                <executions>
-                    <execution>
-                        <id>reformat-sources</id>
-                        <configuration>
-                            <includeStale>false</includeStale>
-                            <style>GOOGLE</style>
-                        </configuration>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>8.20</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>verify-style</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <logViolationsToConsole>true</logViolationsToConsole>
-                    <checkstyleRules>
-                        <module name="Checker">
-                            <!-- http://stackoverflow.com/a/4023351/1720 -->
-                            <module name="SuppressWarningsFilter" />
-                            <!-- Checks for whitespace                               -->
-                            <!-- See http://checkstyle.sf.net/config_whitespace.html -->
-                            <module name="FileTabCharacter" />
-                            <module name="NewlineAtEndOfFile">
-                                <property name="lineSeparator" value="lf"/>
-                                <property name="fileExtensions" value="java, xml, json, clj, html, js"/>
-                            </module>
-                            <!-- Java Doc and Comment Related Results -->
-                            <module name="RegexpSingleline">
-                                <property name="format" value="/\*\* +\p{javaLowerCase}"/>
-                                <property name="fileExtensions" value="java"/>
-                                <property name="message" value="First sentence in a comment should start with a capital letter"/>
-                            </module>
-                            <module name="RegexpMultiline">
-                                <property name="format" value="/\*\*\W+\* +\p{javaLowerCase}"/>
-                                <property name="fileExtensions" value="java"/>
-                                <property name="message" value="First sentence in a comment should start with a capital letter"/>
-                            </module>
-                            <module name="RegexpMultiline">
-                                <property name="format" value="\r?\n[\t ]*\r?\n[\t ]*\r?\n"/>
-                                <property name="fileExtensions" value="java,xml,properties"/>
-                                <property name="message" value="Unnecessary consecutive lines"/>
-                            </module>
-                            <module name="TreeWalker">
-                                <!--<module name="JavadocType">-->
-                                <!--<property name="tokens" value="INTERFACE_DEF"/>-->
-                                <module name="SuppressWarningsHolder" />
-                                <!--</module>-->
-                                <!--<module name="JavadocMethod"/>-->
-                                <module name="CovariantEquals"/>
-                                <module name="EqualsHashCode"/>
-                                <module name="StringLiteralEquality"/>
-                                <module name="EqualsAvoidNull"/>
-                                <module name="SimplifyBooleanReturn"/>
-                                <module name="UnnecessaryParentheses"/>
-                                <module name="IllegalThrows"/>
-                                <module name="TodoComment">
-                                    <property name="format" value="TODO:"/>
-                                </module>
-                                <module name="OuterTypeFilename"/>
-                                <module name="GenericWhitespace" />
-                                <module name="NoWhitespaceAfter" />
-                                <module name="MissingDeprecated"/>
-                                <module name="MissingOverride"/>
-                                <!-- <module name="FinalLocalVariable"/> -->
-                                <!-- <module name="PackageAnnotation"/> -->
-                                <module name="AnnotationLocation"/>
-                                <module name="EmptyStatement"/>
-                                <module name="EmptyBlock"/>
-                                <module name="EmptyCatchBlock">
-                                    <property name="exceptionVariableName" value="expected|ignore"/>
-                                </module>
-                                <module name="LeftCurly"/>
-                                <module name="NeedBraces"/>
-                                <module name="RightCurly"/>
-                                <module name="ArrayTypeStyle"/>
-                                <module name="AvoidNestedBlocks"/>
-                                <module name="AvoidStarImport">
-                                    <property name="excludes" value="java.io,java.net,java.lang.Math" />
-                                    <property name="allowClassImports" value="false" />
-                                    <property name="allowStaticMemberImports" value="false" />
-                                </module>
-                                <module name="RedundantImport"/>
-                                <module name="RedundantModifier"/>
-                                <module name="UnusedImports" />
-                                <module name="LineLength">
-                                    <property name="max" value="160"/>
-                                </module>
-                                <module name="MethodLength">
-                                    <property name="tokens" value="METHOD_DEF"/>
-                                    <property name="max" value="100"/>
-                                    <property name="countEmpty" value="false"/>
-                                </module>
-                                <module name="AnonInnerLength">
-                                    <property name="max" value="80"/>
-                                </module>
-                            </module>
-                        </module>
-                    </checkstyleRules>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.gaul</groupId>
-                <artifactId>modernizer-maven-plugin</artifactId>
-                <version>1.8.0</version>
-                <configuration>
-                    <failOnViolations>false</failOnViolations>
-                    <javaVersion>1.8</javaVersion>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>modernizer</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>modernizer</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.11</version>
-                <configuration>
-                    <includeTests>true</includeTests>
-                    <failOnError>false</failOnError>
-                    <effort>Max</effort>
-                    <threshold>Low</threshold>
-                    <!-- <failOnError>true</failOnError> -->
-                    <plugins>
-                        <plugin>
-                            <groupId>com.mebigfatguy.fb-contrib</groupId>
-                            <artifactId>fb-contrib</artifactId>
-                            <version>7.4.3.sb</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>com.h3xstream.findsecbugs</groupId>
-                            <artifactId>findsecbugs-plugin</artifactId>
-                            <version>1.9.0</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>jp.skypencil.findbugs.slf4j</groupId>
-                            <artifactId>bug-pattern</artifactId>
-                            <version>1.4.2</version>
-                        </plugin>
-                    </plugins>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>verify-bugs</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                    <execution>
-                        <id>analyze-deps</id>
-                        <goals>
-                            <goal>analyze-only</goal>
-                        </goals>
-                        <configuration>
-                            <failOnWarning>${dependency.check.fastfail}</failOnWarning>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-archiver</artifactId>
-                        <version>4.1.0</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                  <failOnError>true</failOnError>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M2</version>
-                <executions>
-                    <execution>
-                        <id>enforce-versions</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <!-- <DependencyConvergence /> -->
-                                <requireMavenVersion>
-                                    <version>3.5.0</version>
-                                </requireMavenVersion>
-                                <requireJavaVersion>
-                                    <version>1.8</version>
-                                </requireJavaVersion>
-                                <requireReleaseDeps>
-                                    <message>No Snapshots Allowed!</message>
-                                    <onlyWhenRelease>true</onlyWhenRelease>
-                                </requireReleaseDeps>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.3</version>
-                <executions>
-                    <execution>
-                        <id>prepare-jacoco</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report-jacoco</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>check-jacoco</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${jacoco.check.skip}</skip>
-                            <!-- This example requires an overall instruction coverage of 50% and no class must be missed -->
-                            <rules>
-                                <rule implementation="org.jacoco.maven.RuleConfiguration">
-                                    <element>BUNDLE</element>
-                                    <limits>
-                                        <limit implementation="org.jacoco.report.check.Limit">
-                                            <counter>INSTRUCTION</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>${jacoco.check.ratio}</minimum>
-                                        </limit>
-                                        <limit implementation="org.jacoco.report.check.Limit">
-                                            <counter>CLASS</counter>
-                                            <value>MISSEDCOUNT</value>
-                                            <maximum>${jacoco.check.missed}</maximum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+          <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>4.0.2</version>
+            <configuration>
+              <format>ALL</format>
+              <failBuildOnCVSS>${failBuildOnCVSS}</failBuildOnCVSS>
+              <suppressionFile>${suppressionFile}</suppressionFile>
+            </configuration>
+            <executions>
+              <execution>
+                <id>owasp-depdendency-check</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
-    </build>
+      </build>
+    </profile>
+  </profiles>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>remove-project-artifact-default</id>
+            <goals>
+              <goal>remove-project-artifact</goal>
+            </goals>
+            <configuration>
+              <removeAll>true</removeAll>
+            </configuration>
+          </execution>
+          <execution>
+            <id>remove-project-artifact-clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>remove-project-artifact</goal>
+            </goals>
+            <configuration>
+              <removeAll>true</removeAll>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <!-- use error prone: http://errorprone.info/docs/installation -->
+        <configuration>
+          <compilerId>javac-with-errorprone</compilerId>
+          <forceJavacCompilerUse>true</forceJavacCompilerUse>
+          <compilerVersion>1.8</compilerVersion>
+          <source>1.8</source>
+          <target>1.8</target>
+          <useIncrementalCompilation>false</useIncrementalCompilation>
+          <showWarnings>${showWarnings}</showWarnings>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>com.uber.nullaway</groupId>
+              <artifactId>nullaway</artifactId>
+              <version>0.7.2</version>
+            </path>
+          </annotationProcessorPaths>
+          <compilerArgs>
+            <!-- <arg>-Xmaxerrs=1000000</arg> -->
+            <arg>-Xlint</arg>
+            <arg>-Xdiags:verbose</arg>
+            <arg>-Xep:NullAway:ERROR</arg>
+            <arg>-Xep:OptionalEquality:WARN</arg>
+            <arg>-Xep:SelfComparison:ERROR</arg>
+            <arg>-Xep:SelfEquals:ERROR</arg>
+            <arg>-Xep:StringEquality:ERROR</arg>
+            <arg>-Xep:EqualsHashCode:ERROR</arg>
+            <arg>-Xep:EqualsIncompatibleType:ERROR</arg>
+            <arg>-Xep:NonOverridingEquals:ERROR</arg>
+            <arg>-Xep:NullableVoid:ERROR</arg>
+            <arg>-Xep:NullablePrimitive:ERROR</arg>
+            <arg>-Xep:NonOverridingEquals:ERROR</arg>
+            <arg>-Xep:NullableConstructor:ERROR</arg>
+            <arg>-Xep:MissingOverride:ERROR</arg>
+            <arg>-Xep:StaticQualifiedUsingExpression:ERROR</arg>
+            <arg>-Xep:RedundantThrows:ERROR</arg>
+          </compilerArgs>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-compiler-javac-errorprone</artifactId>
+            <version>2.8.5</version>
+          </dependency>
+          <!-- override plexus-compiler-javac-errorprone's dependency on
+                    Error Prone with the latest version -->
+          <dependency>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_core</artifactId>
+            <version>2.3.3</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M3</version>
+        <configuration>
+          <trimStackTrace>false</trimStackTrace>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.0.0-M3</version>
+        <configuration>
+          <trimStackTrace>false</trimStackTrace>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+          <execution>
+            <id>version-checks</id>
+            <goals>
+              <goal>display-plugin-updates</goal>
+              <goal>display-dependency-updates</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jdeps-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jdkinternals</goal>
+              <!-- verify main classes -->
+              <goal>test-jdkinternals</goal>
+              <!-- verify test classes -->
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>1.16</version>
+        <executions>
+          <execution>
+            <id>licences</id>
+            <goals>
+              <goal>add-third-party</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.theoryinpractise</groupId>
+        <artifactId>googleformatter-maven-plugin</artifactId>
+        <version>1.7.2</version>
+        <executions>
+          <execution>
+            <id>reformat-sources</id>
+            <configuration>
+              <includeStale>false</includeStale>
+              <style>GOOGLE</style>
+            </configuration>
+            <goals>
+              <goal>format</goal>
+            </goals>
+            <phase>process-sources</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.20</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>verify-style</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <logViolationsToConsole>true</logViolationsToConsole>
+          <checkstyleRules>
+            <module name="Checker">
+              <!-- http://stackoverflow.com/a/4023351/1720 -->
+              <module name="SuppressWarningsFilter"/>
+              <!-- Checks for whitespace                               -->
+              <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+              <module name="FileTabCharacter"/>
+              <module name="NewlineAtEndOfFile">
+                <property name="lineSeparator" value="lf"/>
+                <property name="fileExtensions" value="java, xml, json, clj, html, js"/>
+              </module>
+              <!-- Java Doc and Comment Related Results -->
+              <module name="RegexpSingleline">
+                <property name="format" value="/\*\* +\p{javaLowerCase}"/>
+                <property name="fileExtensions" value="java"/>
+                <property name="message" value="First sentence in a comment should start with a capital letter"/>
+              </module>
+              <module name="RegexpMultiline">
+                <property name="format" value="/\*\*\W+\* +\p{javaLowerCase}"/>
+                <property name="fileExtensions" value="java"/>
+                <property name="message" value="First sentence in a comment should start with a capital letter"/>
+              </module>
+              <module name="RegexpMultiline">
+                <property name="format" value="\r?\n[\t ]*\r?\n[\t ]*\r?\n"/>
+                <property name="fileExtensions" value="java,xml,properties"/>
+                <property name="message" value="Unnecessary consecutive lines"/>
+              </module>
+              <module name="TreeWalker">
+                <!--<module name="JavadocType">-->
+                <!--<property name="tokens" value="INTERFACE_DEF"/>-->
+                <module name="SuppressWarningsHolder"/>
+                <!--</module>-->
+                <!--<module name="JavadocMethod"/>-->
+                <module name="CovariantEquals"/>
+                <module name="EqualsHashCode"/>
+                <module name="StringLiteralEquality"/>
+                <module name="EqualsAvoidNull"/>
+                <module name="SimplifyBooleanReturn"/>
+                <module name="UnnecessaryParentheses"/>
+                <module name="IllegalThrows"/>
+                <module name="TodoComment">
+                  <property name="format" value="TODO:"/>
+                </module>
+                <module name="OuterTypeFilename"/>
+                <module name="GenericWhitespace"/>
+                <module name="NoWhitespaceAfter"/>
+                <module name="MissingDeprecated"/>
+                <module name="MissingOverride"/>
+                <!-- <module name="FinalLocalVariable"/> -->
+                <!-- <module name="PackageAnnotation"/> -->
+                <module name="AnnotationLocation"/>
+                <module name="EmptyStatement"/>
+                <module name="EmptyBlock"/>
+                <module name="EmptyCatchBlock">
+                  <property name="exceptionVariableName" value="expected|ignore"/>
+                </module>
+                <module name="LeftCurly"/>
+                <module name="NeedBraces"/>
+                <module name="RightCurly"/>
+                <module name="ArrayTypeStyle"/>
+                <module name="AvoidNestedBlocks"/>
+                <module name="AvoidStarImport">
+                  <property name="excludes" value="java.io,java.net,java.lang.Math"/>
+                  <property name="allowClassImports" value="false"/>
+                  <property name="allowStaticMemberImports" value="false"/>
+                </module>
+                <module name="RedundantImport"/>
+                <module name="RedundantModifier"/>
+                <module name="UnusedImports"/>
+                <module name="LineLength">
+                  <property name="max" value="160"/>
+                </module>
+                <module name="MethodLength">
+                  <property name="tokens" value="METHOD_DEF"/>
+                  <property name="max" value="100"/>
+                  <property name="countEmpty" value="false"/>
+                </module>
+                <module name="AnonInnerLength">
+                  <property name="max" value="80"/>
+                </module>
+              </module>
+            </module>
+          </checkstyleRules>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.gaul</groupId>
+        <artifactId>modernizer-maven-plugin</artifactId>
+        <version>1.8.0</version>
+        <configuration>
+          <failOnViolations>false</failOnViolations>
+          <javaVersion>1.8</javaVersion>
+        </configuration>
+        <executions>
+          <execution>
+            <id>modernizer</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>modernizer</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>3.1.11</version>
+        <configuration>
+          <includeTests>true</includeTests>
+          <failOnError>false</failOnError>
+          <effort>Max</effort>
+          <threshold>Low</threshold>
+          <!-- <failOnError>true</failOnError> -->
+          <plugins>
+            <plugin>
+              <groupId>com.mebigfatguy.fb-contrib</groupId>
+              <artifactId>fb-contrib</artifactId>
+              <version>7.4.3.sb</version>
+            </plugin>
+            <plugin>
+              <groupId>com.h3xstream.findsecbugs</groupId>
+              <artifactId>findsecbugs-plugin</artifactId>
+              <version>1.9.0</version>
+            </plugin>
+            <plugin>
+              <groupId>jp.skypencil.findbugs.slf4j</groupId>
+              <artifactId>bug-pattern</artifactId>
+              <version>1.4.2</version>
+            </plugin>
+          </plugins>
+        </configuration>
+        <executions>
+          <execution>
+            <id>verify-bugs</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>analyze-deps</id>
+            <goals>
+              <goal>analyze-only</goal>
+            </goals>
+            <configuration>
+              <failOnWarning>${dependency.check.fastfail}</failOnWarning>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.1.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-archiver</artifactId>
+            <version>4.1.0</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <failOnError>true</failOnError>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.0.0-M2</version>
+        <executions>
+          <execution>
+            <id>enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <!-- <DependencyConvergence /> -->
+                <requireMavenVersion>
+                  <version>3.5.0</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>1.8</version>
+                </requireJavaVersion>
+                <requireReleaseDeps>
+                  <message>No Snapshots Allowed!</message>
+                  <onlyWhenRelease>true</onlyWhenRelease>
+                </requireReleaseDeps>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.3</version>
+        <executions>
+          <execution>
+            <id>prepare-jacoco</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report-jacoco</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>check-jacoco</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <skip>${jacoco.check.skip}</skip>
+              <!-- This example requires an overall instruction coverage of 50% and no class must be missed -->
+              <rules>
+                <rule implementation="org.jacoco.maven.RuleConfiguration">
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit implementation="org.jacoco.report.check.Limit">
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>${jacoco.check.ratio}</minimum>
+                    </limit>
+                    <limit implementation="org.jacoco.report.check.Limit">
+                      <counter>CLASS</counter>
+                      <value>MISSEDCOUNT</value>
+                      <maximum>${jacoco.check.missed}</maximum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
