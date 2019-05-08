@@ -289,7 +289,7 @@
                 <module name="RedundantModifier"/>
                 <module name="UnusedImports"/>
                 <module name="LineLength">
-                  <property name="max" value="160"/>
+                  <property name="max" value="100"/>
                 </module>
                 <module name="MethodLength">
                   <property name="tokens" value="METHOD_DEF"/>
