@@ -89,6 +89,7 @@
           <compilerArgs>
             <!-- <arg>-Xmaxerrs=1000000</arg> -->
             <arg>-XepOpt:NullAway:AnnotatedPackages=com.theoryinpractise</arg>
+            <arg>-XepOpt:NullAway:CustomInitializerAnnotations=org.testng.annotations.BeforeClass,org.testng.annotations.BeforeTest,org.testng.annotations.BeforeMethod</arg>
             <arg>-Xlint</arg>
             <arg>-Xdiags:verbose</arg>
             <arg>-Xep:NullAway:ERROR</arg>
@@ -189,6 +190,7 @@
             <id>reformat-sources</id>
             <configuration>
               <includeStale>false</includeStale>
+              <!-- <fixImports>true</fixImports> -->
               <style>GOOGLE</style>
             </configuration>
             <goals>
