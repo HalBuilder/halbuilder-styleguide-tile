@@ -8,9 +8,6 @@
     <jacoco.check.missed>0</jacoco.check.missed>
     <asciidoclet.version>1.5.4</asciidoclet.version>
   </properties>
-  <prerequisites>
-    <maven>3.3.9</maven>
-  </prerequisites>
   <profiles>
     <profile>
       <id>security</id>
@@ -19,7 +16,7 @@
           <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
-            <version>4.0.2</version>
+            <version>5.1.0</version>
             <configuration>
               <format>ALL</format>
               <failBuildOnCVSS>${failBuildOnCVSS}</failBuildOnCVSS>
@@ -83,7 +80,7 @@
             <path>
               <groupId>com.uber.nullaway</groupId>
               <artifactId>nullaway</artifactId>
-              <version>0.7.2</version>
+              <version>0.7.5</version>
             </path>
           </annotationProcessorPaths>
           <compilerArgs>
@@ -156,7 +153,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jdeps-plugin</artifactId>
-        <version>3.1.1</version>
+        <version>3.1.2</version>
         <executions>
           <execution>
             <goals>
@@ -171,7 +168,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
-        <version>1.16</version>
+        <version>2.0.0</version>
         <executions>
           <execution>
             <id>licences</id>
@@ -184,11 +181,12 @@
       <plugin>
         <groupId>com.theoryinpractise</groupId>
         <artifactId>googleformatter-maven-plugin</artifactId>
-        <version>1.7.2</version>
+        <version>1.7.4</version>
         <executions>
           <execution>
             <id>reformat-sources</id>
             <configuration>
+              <maxLineLength>160</maxLineLength>
               <includeStale>false</includeStale>
               <!-- <fixImports>true</fixImports> -->
               <style>GOOGLE</style>
@@ -203,12 +201,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
         <dependencies>
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>8.20</version>
+            <version>8.22</version>
           </dependency>
         </dependencies>
         <executions>
@@ -292,7 +290,7 @@
                 <module name="RedundantModifier"/>
                 <module name="UnusedImports"/>
                 <module name="LineLength">
-                  <property name="max" value="100"/>
+                  <property name="max" value="160"/>
                 </module>
                 <module name="MethodLength">
                   <property name="tokens" value="METHOD_DEF"/>
@@ -328,7 +326,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>3.1.11</version>
+        <version>3.1.12</version>
         <configuration>
           <includeTests>true</includeTests>
           <failOnError>false</failOnError>
@@ -337,9 +335,9 @@
           <!-- <failOnError>true</failOnError> -->
           <plugins>
             <plugin>
-              <groupId>com.mebigfatguy.fb-contrib</groupId>
-              <artifactId>fb-contrib</artifactId>
-              <version>7.4.3.sb</version>
+              <groupId>com.mebigfatguy.sb-contrib</groupId>
+              <artifactId>sb-contrib</artifactId>
+              <version>7.4.6</version>
             </plugin>
             <plugin>
               <groupId>com.h3xstream.findsecbugs</groupId>
@@ -349,7 +347,7 @@
             <plugin>
               <groupId>jp.skypencil.findbugs.slf4j</groupId>
               <artifactId>bug-pattern</artifactId>
-              <version>1.4.2</version>
+              <version>1.5.0</version>
             </plugin>
           </plugins>
         </configuration>
@@ -433,7 +431,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.3</version>
+        <version>0.8.4</version>
         <executions>
           <execution>
             <id>prepare-jacoco</id>
