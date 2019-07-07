@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.theoryinpractise</groupId>
     <artifactId>halbuilder-parent</artifactId>
-   <version>1.0.1</version>
+   <version>1.0.2</version>
   </parent>
   <groupId>com.theoryinpractise</groupId>
   <artifactId>halbuilder-styleguide-tile</artifactId>
@@ -13,9 +13,6 @@
   <name>halbuilder-styleguide-tile</name>
   <description>HalBuilder Style Guide Enforcement Tile</description>
   <url>http://www.gotohal.net</url>
-  <prerequisites>
-    <maven>3.3.9</maven>
-  </prerequisites>
   <build>
     <plugins>
       <plugin>
