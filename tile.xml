@@ -12,14 +12,14 @@
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M4</version>
+        <version>3.0.0-M5</version>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.0.0-M4</version>
+        <version>3.0.0-M5</version>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
         </configuration>
@@ -75,7 +75,7 @@
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
         <artifactId>sortpom-maven-plugin</artifactId>
-        <version>2.11.0</version>
+        <version>2.12.0</version>
         <configuration>
           <sortProperties>true</sortProperties>
           <sortDependencies>scope,groupId,artifactId</sortDependencies>
@@ -85,7 +85,7 @@
       <plugin>
         <groupId>com.theoryinpractise</groupId>
         <artifactId>googleformatter-maven-plugin</artifactId>
-        <version>1.7.4</version>
+        <version>1.7.5</version>
         <executions>
           <execution>
             <id>reformat-sources</id>
@@ -110,7 +110,7 @@
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>8.30</version>
+            <version>8.34</version>
           </dependency>
         </dependencies>
         <executions>
@@ -213,7 +213,7 @@
       <plugin>
         <groupId>org.gaul</groupId>
         <artifactId>modernizer-maven-plugin</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0</version>
         <configuration>
           <failOnViolations>false</failOnViolations>
           <javaVersion>1.8</javaVersion>
@@ -231,7 +231,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>3.1.12.2</version>
+        <version>4.0.4</version>
         <configuration>
           <includeTests>true</includeTests>
           <failOnError>false</failOnError>
