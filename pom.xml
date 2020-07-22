@@ -10,16 +10,12 @@
 
   <groupId>com.theoryinpractise</groupId>
   <artifactId>halbuilder-styleguide-tile</artifactId>
-  <version>1.0.25</version>
+  <version>1.0.26-SNAPSHOT</version>
   <packaging>tile</packaging>
 
   <name>halbuilder-styleguide-tile</name>
   <description>HalBuilder Style Guide Enforcement Tile</description>
   <url>http://www.gotohal.net</url>
-
-  <scm>
-    <tag>halbuilder-styleguide-tile-1.0.25</tag>
-  </scm>
 
   <build>
     <plugins>
