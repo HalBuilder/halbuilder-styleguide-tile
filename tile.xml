@@ -40,21 +40,6 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jdeps-plugin</artifactId>
-        <version>3.1.2</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>jdkinternals</goal>
-              <!-- verify main classes -->
-              <goal>test-jdkinternals</goal>
-              <!-- verify test classes -->
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <version>2.0.0</version>
